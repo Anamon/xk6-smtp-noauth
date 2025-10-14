@@ -25,11 +25,7 @@ func check(e error) {
 	}
 }
 
-func plainAuth(host string, password string, sender string) smtp.Auth {
-	return smtp.PlainAuth("", sender, password, host)
-}
-
-func (*SMTP) SendMail(host string, port string, sender string, password string, recipient string, options options) {
+func (*SMTP) SendMail(host string, port string, sender string, recipient string, options options) {
 	emailMessage := "From: " + sender + "\r\n" + "To: " + recipient + "\r\n"
 
 	if options.Subject != "" {
@@ -45,7 +41,6 @@ func (*SMTP) SendMail(host string, port string, sender string, password string, 
 	}
 
 	body := []byte(emailMessage)
-	auth := plainAuth(host, password, sender)
-	err := smtp.SendMail(host+":"+port, auth, sender, options.UDW, body)
+	err := smtp.SendMail(host+":"+port, nil, sender, options.UDW, body)
 	check(err)
 }

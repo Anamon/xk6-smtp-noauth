@@ -8,11 +8,10 @@ export default function () {
         udw: ["udwRecipient@gmail.com"]
     }
 
-    smtp.sendMail(
-        "smtp.gmail.com", 
-        "587", 
-        "sender@gmail.com", 
-        "senderPassword", 
+    smtp.SendMail(
+        "smtp.gmail.com",
+        "587",
+        "sender@gmail.com",
         "recipient@gmail.com",
         mailOptions
     )
