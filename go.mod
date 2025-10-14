@@ -1,4 +1,4 @@
-module github.com/gpiechnik2/xk6-smtp
+module github.com/Anamon/xk6-smtp-noauth
 
 go 1.19
 
