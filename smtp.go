@@ -8,6 +8,7 @@ import (
 	"strings"
 
 	"go.k6.io/k6/js/modules"
+	"github.com/google/uuid"
 )
 
 func init() {
@@ -17,10 +18,10 @@ func init() {
 type SMTP struct{}
 
 type options struct {
-	Subject string `js:"subject"`
-	Message string `js:"message"`
-	UDW []string `js:"udw"`
-	Attachment string `js:"attachment"`
+	Subject    string   `js:"subject"`
+	Message    string   `js:"message"`
+	UDW        []string `js:"udw"`
+	Attachment string   `js:"attachment"`
 }
 
 func check(e error) {
@@ -29,12 +30,14 @@ func check(e error) {
 	}
 }
 
-func (*SMTP) SendMail(host string, port string, sender string, recipient string, options options) {
+func (*SMTP) SendMail(host string, port string, sender string, recipient string, senderDomain string, options options) {
 	emailMessage := "From: " + sender + "\r\n" + "To: " + recipient + "\r\n"
 
 	if options.Subject != "" {
 		emailMessage += "Subject: " + options.Subject + "\r\n"
 	}
+
+	emailMessage += "Message-ID: <" + uuid.New().String() + "@" + senderDomain + ">\r\n"
 
 	boundary := "BOUNDARY12345"
 	emailMessage += "MIME-Version: 1.0\r\n"
