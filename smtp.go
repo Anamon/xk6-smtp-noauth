@@ -6,9 +6,10 @@ import (
 	"net/smtp"
 	"os"
 	"strings"
+	"time"
 
-	"go.k6.io/k6/js/modules"
 	"github.com/google/uuid"
+	"go.k6.io/k6/js/modules"
 )
 
 func init() {
@@ -38,6 +39,7 @@ func (*SMTP) SendMail(host string, port string, sender string, recipient string,
 	}
 
 	emailMessage += "Message-ID: <" + uuid.New().String() + "@" + senderDomain + ">\r\n"
+	emailMessage += "Date: " + time.Now().Format(time.RFC1123Z) + "\r\n"
 
 	boundary := "BOUNDARY12345"
 	emailMessage += "MIME-Version: 1.0\r\n"
